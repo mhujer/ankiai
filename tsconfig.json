@@ -1,0 +1,10 @@
+{
+    "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "module": "Node16",
+        "outDir": "build",
+        "lib": ["es2022"],
+        "noImplicitAny": true
+    }
+}
