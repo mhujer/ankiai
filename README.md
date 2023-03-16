@@ -4,6 +4,8 @@
 
 Anki AI is a powerful tool that leverages the chat completion API from ChatGPT to generate example sentences for your Anki notes. With Anki AI, you can quickly and easily enhance your Anki notes with relevant and useful example sentences, regardless of the language you are studying.
 
+> **I wrote [an article about Anki AI on my blog](https://blog.martinhujer.cz/anki-ai-example-sentences-for-anki-with-chat-gpt/).**
+
 ## Depends on:
 
 1. [AnkiConnect](https://github.com/FooSoft/anki-connect) plugin to provide HTTP API for Anki.

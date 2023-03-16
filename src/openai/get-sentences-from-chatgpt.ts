@@ -21,7 +21,7 @@ export const fetchExamples = async (apiKey: string, vocabulary: NoteForProcessin
             {
                 role: 'system',
                 content:
-                    'You are a helpful vocabulary learning asistent who helps user generate example sentences in German for language learning. I will provide each word prefixed by ID and you will generate two example sentences for each input. Each sentence in response must be on its own line and starting with ID I provided so it can be parsed with regex /^(\\d+): (.*)$/',
+                    'You are a helpful vocabulary learning assistant who helps user generate example sentences in German for language learning. I will provide each word prefixed by ID and you will generate two example sentences for each input. Each sentence in response must be on its own line and starting with ID I provided so it can be parsed with regex /^(\\d+): (.*)$/',
             },
             {
                 role: 'user',
