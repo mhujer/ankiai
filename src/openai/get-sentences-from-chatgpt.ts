@@ -1,52 +1,33 @@
-import { Configuration, OpenAIApi } from 'openai';
 import type { NoteForProcessing } from '../anki';
 import { generatePrompt } from './generate-prompt';
+import { createJsonTranslator, createLanguageModel } from 'typechat';
+import fs from 'fs';
+import path from 'path';
+import type { AllVocabularyExamples } from './typechat-response-schema';
 
-export const fetchExamples = async (apiKey: string, vocabulary: NoteForProcessing[]) => {
+export const fetchExamples = async (vocabulary: NoteForProcessing[]) => {
     if (vocabulary.length === 0) {
         throw new Error('No vocabulary passed!');
     }
 
-    const configuration = new Configuration({
-        apiKey: apiKey,
-    });
-    const openai = new OpenAIApi(configuration);
+    const model = createLanguageModel(process.env);
+    // @todo path is from `build/openai/`
+    const schema = fs.readFileSync(path.join(__dirname, '../../src/openai/typechat-response-schema.ts'), 'utf8');
+    const translator = createJsonTranslator<AllVocabularyExamples>(model, schema, 'AllVocabularyExamples');
 
-    const prompt = generatePrompt(vocabulary);
-    console.log(prompt);
+    const vocabularyPrompt = generatePrompt(vocabulary);
+    console.log(vocabularyPrompt);
 
-    const chatCompletion = await openai.createChatCompletion({
-        model: 'gpt-3.5-turbo',
-        messages: [
-            {
-                role: 'system',
-                content:
-                    'You are a helpful vocabulary learning assistant who helps user generate example sentences in German for language learning. I will provide each word prefixed by ID and you will generate two example sentences for each input. Each sentence in response must be on its own line and starting with ID I provided so it can be parsed with regex /^(\\d+): (.*)$/',
-            },
-            {
-                role: 'user',
-                content: prompt,
-            },
-        ],
-    });
+    const prompt =
+        'You are a helpful vocabulary learning assistant who helps user generate example sentences in German for language learning. I will provide each word prefixed by ID and you will generate two example sentences for each input. The sentences should be complex enough for A2/B1 level.\n' +
+        vocabularyPrompt;
 
-    const data = chatCompletion.data;
-
-    if (chatCompletion.data.choices[0] === undefined || chatCompletion.data.choices[0].message === undefined) {
-        console.dir(data);
-        console.log(JSON.stringify(data));
-        throw new Error('Invalid response structure!');
+    const response = await translator.translate(prompt);
+    if (!response.success) {
+        console.dir(response);
+        throw new Error('Error fetching data from chatGPT: ' + response.message);
+    } else {
+        console.dir(response.data.items);
+        return response.data.items;
     }
-
-    // finish_reason should be 'stop', but sometimes it returns null and the output seems ok, so I can use it as well
-    if (
-        chatCompletion.data.choices[0].finish_reason !== 'stop' &&
-        chatCompletion.data.choices[0].finish_reason !== null // eslint-disable-line @typescript-eslint/no-unnecessary-condition
-    ) {
-        console.dir(data);
-        console.log(JSON.stringify(data));
-        throw new Error('Response incomplete!');
-    }
-
-    return chatCompletion.data.choices[0].message.content;
 };

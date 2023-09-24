@@ -16,8 +16,9 @@
         "coverage": "vitest run --coverage"
     },
     "dependencies": {
+        "axios-debug-log": "^1.0.0",
         "dotenv": "^16.0.3",
-        "openai": "^3.2.1"
+        "typechat": "^0.0.10"
     },
     "devDependencies": {
         "@tsconfig/node18-strictest-esm": "^1.0.1",

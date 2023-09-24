@@ -8,7 +8,7 @@ test('generate prompt', () => {
             text: 'der Foo',
         },
         {
-            noteId: 1,
+            noteId: 33,
             text: 'der Bar',
         },
         {
@@ -17,5 +17,5 @@ test('generate prompt', () => {
         },
     ]);
 
-    expect(prompt).toBe('1: der Foo\n1: der Bar\n2: die FooBaz');
+    expect(prompt).toBe('1: der Foo\n33: der Bar\n2: die FooBaz');
 });
