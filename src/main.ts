@@ -28,7 +28,7 @@ void (async function () {
             const noteId = vocabularyExample.id;
             const examples = vocabularyExample.exampleSentences;
 
-            const fieldText = examples.join('\n<br>');
+            const fieldText = examples.join('<br>');
 
             const noteForAnki = {
                 id: +noteId,
