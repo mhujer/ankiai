@@ -4,8 +4,6 @@ import { fetchExamples } from './openai/get-sentences-from-chatgpt';
 import sleep from './utils/sleep';
 require('axios-debug-log/enable');
 
-const DECK_TO_PROCESS = 'Deutsch';
-
 const MAX_NOTES_PROCESSED_AT_ONCE = 20;
 const MAX_NOTES_PROCESSED_AT_ONE_RUN = 100;
 
@@ -14,15 +12,27 @@ let notesProcessedCount = 0;
 void (async function () {
     dotenv.config({ path: '.env.local' });
 
+    const ankiDeck = process.env['ANKI_DECK'];
+    if (ankiDeck === undefined) {
+        throw new Error('ANKI_DECK is not configured in env!');
+    }
+
+    const ankiLanguage = process.env['ANKI_LANGUAGE'];
+    if (ankiLanguage === undefined) {
+        throw new Error('ANKI_LANGUAGE is not configured in env!');
+    }
+
+    console.log(`Processing cards from Anki deck "${ankiDeck}" in language "${ankiLanguage}"...`);
+
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition,no-constant-condition
     while (true) {
-        const notes = await fetchNotesFromAnki(DECK_TO_PROCESS);
+        const notes = await fetchNotesFromAnki(ankiDeck);
         console.log(`Found ${notes.length} notes eligible for fetching!`);
 
         const notesForProcessing = notes.slice(0, MAX_NOTES_PROCESSED_AT_ONCE);
         console.log(`Processing batch of ${notesForProcessing.length} notes.`);
 
-        const examplesFromChatGPT = await fetchExamples(notesForProcessing);
+        const examplesFromChatGPT = await fetchExamples(ankiLanguage, notesForProcessing);
 
         for (const vocabularyExample of examplesFromChatGPT) {
             const noteId = vocabularyExample.id;

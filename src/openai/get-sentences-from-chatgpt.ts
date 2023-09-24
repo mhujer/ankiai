@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import type { AllVocabularyExamples } from './typechat-response-schema';
 
-export const fetchExamples = async (vocabulary: NoteForProcessing[]) => {
+export const fetchExamples = async (language: string, vocabulary: NoteForProcessing[]) => {
     if (vocabulary.length === 0) {
         throw new Error('No vocabulary passed!');
     }
@@ -19,7 +19,9 @@ export const fetchExamples = async (vocabulary: NoteForProcessing[]) => {
     console.log(vocabularyPrompt);
 
     const prompt =
-        'You are a helpful vocabulary learning assistant who helps user generate example sentences in German for language learning. I will provide each word prefixed by ID and you will generate two example sentences for each input. The sentences should be complex enough for A2/B1 level.\n' +
+        'You are a helpful vocabulary learning assistant who helps user generate example sentences in ' +
+        language +
+        ' for language learning. I will provide each word prefixed by ID and you will generate two example sentences for each input. The sentences should be complex enough for A2/B1 level.\n' +
         vocabularyPrompt;
 
     const response = await translator.translate(prompt);
