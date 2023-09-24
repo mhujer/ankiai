@@ -3,6 +3,8 @@
     "include": ["src/**/*"],
     "compilerOptions": {
         "module": "Node16",
+        "moduleResolution": "Node16",
+        "ignoreDeprecations": "5.0",
         "outDir": "build",
         "lib": ["es2022"],
         "noImplicitAny": true
