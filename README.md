@@ -17,10 +17,10 @@ Anki AI was originally created to add example sentences to my German Anki notes,
 
 1. [Obtain an OpenAI API key](https://platform.openai.com/account/api-keys) and add it to your `.env.local` under `OPENAI_API_KEY` entry. See the included `.env` file for an example.
 2. Install [AnkiConnect](https://ankiweb.net/shared/info/2055492159) to your Anki
-3. Update the `DECK_TO_PROCESS` constant in `src/main.ts` to match the name of the deck you want to process.
+3. Configure `ANKI_DECK` in `.env.local` file to match the name of the deck you want to process (e.g. `'Deutsch'`).
+4. Configure `ANKI_LANGUAGE` in `.env.local` file to the language of your cards (e.g. `'Spanish'` or `'German'`) 
 4. Modify `NoteFields` interface to match fields names in your Anki notes
 5. Replace all occurences of `FrontTextExample` with the name of the field where you want the example sentences to be placed.
-6. For other languages than German, I guess that it would be enough to replace `German` with something else in the prompt in `src/openai/get-sentences-from-chatgpt.ts`
 7. Ensure that Anki is running.
 8. Run `npm run dev` to start the Anki AI application.
 
