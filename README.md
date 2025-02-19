@@ -8,6 +8,8 @@ Anki AI is a powerful tool that leverages the chat completion API from ChatGPT t
 
 I created most of the plugin by prompting `o3-mini-high` model. Worked better than expected!
 
+![Anki AI screenshot](ankiai-screenshot.png)
+
 ## Depends on:
 1. [Chat completion API](https://platform.openai.com/docs/guides/chat) from ChatGPT to generate sentences.
 
