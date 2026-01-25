@@ -22,8 +22,8 @@ DEFAULT_PROMPT = (
     "You are a helpful vocabulary learning teacher who helps a user generate example sentences in German for language learning. "
     "I will provide multiple input lines. Each input is prefixed with its note id. For each input generate two lines with example sentences. "
     "Start each line with the corresponding note id, followed by a colon and a space, and then the example sentence. "
-    "The sentences should be complex enough for A2/B1 level. (do not add any extra numbering or bullet points). "
-    "Only include responses for the note ids provided below.\n\n"
+    "The sentences should be complex enough for A2 level, but not too complex (max around 10 words). "
+    "(do not add any extra numbering or bullet points). Only include responses for the note ids provided below.\n\n"
     "Inputs:\n"
 )
 DEFAULT_BATCH_SIZE = "20"  # Default batch size as a string
