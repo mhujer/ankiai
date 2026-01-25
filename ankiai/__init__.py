@@ -122,7 +122,7 @@ def generate_examples_batch(batch_prompt, api_key):
         "Authorization": f"Bearer {api_key}",
     }
     payload = {
-        "model": "gpt-4o",
+        "model": "gpt-5.1",
         "messages": [{"role": "system", "content": batch_prompt}],
         "temperature": 0.7,
     }
