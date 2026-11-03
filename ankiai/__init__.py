@@ -122,9 +122,9 @@ def generate_examples_batch(batch_prompt, api_key):
         "Authorization": f"Bearer {api_key}",
     }
     payload = {
-        "model": "gpt-5.1",
+        "model": "gpt-6.1-terra",
         "messages": [{"role": "system", "content": batch_prompt}],
-        "temperature": 0.7,
+        "reasoning_effort": "medium",
     }
     print("Batch prompt:")
     print(batch_prompt)
